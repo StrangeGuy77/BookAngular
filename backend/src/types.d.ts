@@ -1,4 +1,6 @@
-export interface IUser {
+import { Document } from "mongoose";
+
+export interface IUser extends Document {
   user_email: string;
   password: string;
   user_role?: string;
@@ -11,13 +13,14 @@ export interface IUser {
   enterprise?: string;
   country?: string;
   city?: string;
-  book_collection?: IBook[];
+  book_collection: IBook[];
 }
 
-export interface IBook {
+export interface IBook extends Document {
   title: string;
   description: string;
   author: string;
+  userUploaderId?: string;
   price?: number;
   extension?: string;
   publisher?: string;
@@ -25,6 +28,5 @@ export interface IBook {
   writingYear?: any;
   categories?: string[];
   filename?: string;
-  userUploaderId: string;
   timestamp?: any;
 }

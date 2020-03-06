@@ -1,15 +1,18 @@
 import { Request, Response } from "express";
 import User from "../database/models/User";
-import { IUser } from "../types";
+import Book from "../database/models/Books";
+import { IUser, IBook } from "../types";
 import * as bcrypt from "bcryptjs";
 
 export const getUsers = async (_: Request, res: Response) => {
-  const Users = await User.find();
-  if (Users) {
-    res.status(200).json({
-      Users
-    });
-  } else {
+  try {
+    const Users = await User.find();
+    if (Users.length > 0) {
+      res.status(200).json({
+        Users
+      });
+    }
+  } catch (error) {
     res.status(500).json({
       message: "Ocurrió un error en la petición."
     });
@@ -47,7 +50,6 @@ export const getUser = async (req: Request, res: Response) => {
 export const createUser = async (req: Request, res: Response) => {
   const body: IUser = req.body;
   const { user_email, password } = body;
-  console.log(user_email, password);
   if (!user_email || !password) {
     res.status(500).json({
       message:
@@ -56,10 +58,14 @@ export const createUser = async (req: Request, res: Response) => {
   } else {
     try {
       const searchRepeatedEmail = await User.find({
-        email: body.user_email
+        user_email
       });
 
-      if (!(searchRepeatedEmail.length > 0)) {
+      if (searchRepeatedEmail.length > 0) {
+        res.status(400).json({
+          message: "El usuario que intenta registrar ya está registrado."
+        });
+      } else {
         try {
           const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -82,10 +88,6 @@ export const createUser = async (req: Request, res: Response) => {
             error
           });
         }
-      } else {
-        res.status(400).json({
-          message: "El usuario que intenta registrar ya está registrado."
-        });
       }
     } catch (error) {
       res.status(500).json({
@@ -124,7 +126,7 @@ export const deleteUser = async (req: Request, res: Response) => {
 };
 
 export const updateUser = async (req: Request, res: Response) => {
-  const body = req.body;
+  const body = JSON.parse(JSON.stringify(req.body));
   const userId = req.params.userId;
   if (!body || !userId) {
     res.status(400).json({
@@ -139,7 +141,8 @@ export const updateUser = async (req: Request, res: Response) => {
         });
       } else {
         res.status(200).json({
-          message: "El usuario fue actualizado exitosamente"
+          message: "El usuario fue actualizado exitosamente",
+          response
         });
       }
     } catch (error) {
@@ -147,6 +150,122 @@ export const updateUser = async (req: Request, res: Response) => {
         message: "Ocurrió un error en el servidor.",
         error
       });
+    }
+  }
+};
+
+export const login = async (req: Request, res: Response) => {
+  const { user_email, password }: IUser = JSON.parse(JSON.stringify(req.body));
+
+  if (!user_email || !password) {
+    res.status(400).json({
+      message:
+        "Faltan datos por enviar. El email y la contraseña son obligatorios."
+    });
+  } else {
+    try {
+      const userExist: IUser = (await User.findOne({ user_email })) as IUser;
+
+      if (userExist) {
+        const hashedPassword = userExist.password;
+        if (bcrypt.compareSync(password, hashedPassword)) {
+          userExist.password = "";
+          res.status(400).json({
+            message: "Inicio de sesión correcto.",
+            userExist
+          });
+        } else {
+          res.status(400).json({
+            message: "Email o contraseña incorrectos."
+          });
+        }
+      } else {
+        res.status(400).json({
+          message: "Email o contraseña incorrectos."
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        message: "Ocurrió un error durante la petición.",
+        error
+      });
+    }
+  }
+};
+
+export const saveABookIntoUser = async (req: Request, res: Response) => {
+  if (req.query) {
+    const { bookId } = req.query;
+    const { userId } = req.params;
+    if (!bookId || !userId) {
+      res.status(400).json({
+        message:
+          "Faltan datos por enviar. El id del libro y del usuario son obligatorios. Revise la url y verifique: 'user/:userId?bookId=:bookId'"
+      });
+    } else {
+      const bookExist: IBook = (await Book.findById(bookId)) as IBook;
+      const userExist: IUser = (await User.findById(userId)) as IUser;
+      if (bookExist && userExist) {
+        const isBookWithinBookCollection = userExist.book_collection.find(
+          (book: IBook) => book._id == bookId
+        );
+        if (!isBookWithinBookCollection) {
+          userExist.book_collection?.push(bookExist);
+          await userExist.save();
+          res.status(200).json({
+            message:
+              "El libro fue agregado correctamente al arreglo de libros del usuario.",
+            updatedCollection: userExist.book_collection
+          });
+        } else {
+          res.status(400).json({
+            message:
+              "El libro que intenta agregar a la colección del usuario ya existe dentro de su colección."
+          });
+        }
+      } else {
+        res.status(400).json({
+          message:
+            "El libro o el usuario no existe. Por favor verifique el ID que ha enviado mediante las rutas /books/:bookId o /user/:userId"
+        });
+      }
+    }
+  } else {
+    const Book: IBook = JSON.parse(JSON.stringify(req.body));
+    const userId = req.params.userId;
+
+    if (!Book.title || !Book.description || !Book.author || !userId) {
+      res.status(400).json({
+        message:
+          "La id del usuario no pueden estar vacíos. Los campos obligatorios del libro son: author, description, title"
+      });
+    } else {
+      try {
+        const userExist: IUser = (await User.findById(userId)) as IUser;
+        if (userExist) {
+          try {
+            userExist.book_collection?.push(Book);
+            await userExist.save();
+            res.status(200).json({
+              message: "Libro guardado exitosamente.",
+              updatedCollection: userExist.book_collection
+            });
+          } catch (error) {
+            res.status(500).json({
+              message: "Hubo un error guardando el libro dentro del usuario",
+              error
+            });
+          }
+        } else {
+          res.status(400).json({
+            message: "El usuario al que intenta asignar el libro no existe."
+          });
+        }
+      } catch (error) {
+        res.status(500).json({
+          message: "Hubo un error buscando al usuario."
+        });
+      }
     }
   }
 };

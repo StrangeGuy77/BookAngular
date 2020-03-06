@@ -3,12 +3,14 @@ import Book from "../database/models/Books";
 import { IBook } from "../types";
 
 export const getBooks = async (_: Request, res: Response) => {
-  const Books = await Book.find();
-  if (Books) {
-    res.status(200).json({
-      Books
-    });
-  } else {
+  try {
+    const Books = await Book.find();
+    if (Books) {
+      res.status(200).json({
+        Books
+      });
+    }
+  } catch (error) {
     res.status(500).json({
       message: "Ocurrió un error en la petición."
     });
@@ -49,7 +51,7 @@ export const createBook = async (req: Request, res: Response) => {
   if (!author || !description || !title || !userUploaderId) {
     res.status(500).json({
       message:
-        "Faltan datos. Los datos necesarios son: author, description, price, title. Todos son string."
+        "Faltan datos. Los datos necesarios son: author, description, userUploaderId, title. Todos son string."
     });
   } else {
     try {
