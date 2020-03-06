@@ -1,30 +1,14 @@
 import { Injectable } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
 export class FakeDataService {
-  arrayTest = [
-    {
-      email: 'jaime@gmailcom',
-      password: 'quegonorreadepc'
-    },
-    {
-      email: 'JLOepz@soft.com',
-      password: 'asdasa'
-    }, {
-      email: 'xdxd@hotmail.com',
-      password: 'asdasa'
-    }, {
-      email: 'dislexy@test.com',
-      password: 'asdasa'
-    }, {
-      email: 'testemail@soft.com',
-      password: 'asdasa'
-    }, {
-      email: '',
-      password: ''
-    }
-  ];
+
+  constructor(public http: HttpClient) {
+
+  }
+
+  this.http.get('https://103f126b.ngrok.io/books')
 
 }

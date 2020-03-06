@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { FakeDataService } from '../data/fake-data.service';
-
+import axios from 'axios';
 
 @Component({
   selector: 'app-login',
@@ -14,21 +13,21 @@ export class LoginComponent {
   password: string;
   regex: RegExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
 
-  userData = new FakeDataService().arrayTest;
 
-  onClick (event: Event): void {
+  async onClick (event: Event): Promise<void> {
     event.preventDefault();
     const testEmail: boolean = this.regex.test(this.email);
     if (testEmail && this.email)
     {
-      this.userData.push({
-        email: this.email,
+      const test = await axios.post('https://103f126b.ngrok.io/user', {
+        user_email: this.email,
         password: this.password
       });
+      console.log(test);
     } else
     {
-
+      console.log('El email ingresado es erróneo');
     }
-  };
+  }
 
 }
