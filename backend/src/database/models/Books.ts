@@ -10,7 +10,7 @@ const bookSchema = new Schema({
   publisherYear: { type: Date, default: Date.now },
   writingYear: { type: Date, default: Date.now },
   categories: { type: Array, default: [] },
-  filename: { type: String, default: "test" },
+  urlImg: { type: String, default: "https://sevilla.abc.es/gurme/wp-content/uploads/sites/24/2012/01/comida-rapida-casera.jpg" },
   userUploaderId: { type: String, default: 0 },
   timestamp: { type: Date, default: Date.now }
 });

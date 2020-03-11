@@ -21,12 +21,11 @@ const router = Router();
 export default (app: Application) => {
   router
     .route("/")
-    .all((res: Response) =>
+    .all((_: Request, res: Response) =>
       res.send(
         'Esta no es la página principal. El endpoint de las rutas son: "...com/user", "...com/books o, de solicitarlo por id para cambios u otra cosa "...com/user/:id" y lo mismo con books.'
       )
     );
-
   router
     .route("/user")
     .get(getUsers)
@@ -36,6 +35,9 @@ export default (app: Application) => {
         `El método "${req.method.toUpperCase()}" no existe dentro de la ruta /user`
       );
     });
+
+
+  router.post("/user/login", login);
 
   router
     .route("/user/:userId")
@@ -47,6 +49,7 @@ export default (app: Application) => {
         `El método "${req.method.toUpperCase()}" no existe dentro de la ruta /user/:userId`
       );
     });
+
 
   router
     .route("/books")
@@ -69,7 +72,6 @@ export default (app: Application) => {
       );
     });
 
-  router.post("/user/login", login);
   router.post("/user/addBook/:userId", saveABookIntoUser);
 
   app.use(router);

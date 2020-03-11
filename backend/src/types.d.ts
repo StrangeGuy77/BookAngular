@@ -27,6 +27,6 @@ export interface IBook extends Document {
   publisherYear?: any;
   writingYear?: any;
   categories?: string[];
-  filename?: string;
+  urlImg?: string;
   timestamp?: any;
 }
