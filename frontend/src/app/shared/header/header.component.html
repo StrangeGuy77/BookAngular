@@ -1,44 +1,66 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">
-    <img
-      style="height: 50px;"
-      src="https://cdn.clipart.email/2833f6201fdde175f809026cfb251cde_books-svg-clipart_1000-1000.svg"
-      alt=""
-    />
-  </a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarTogglerDemo02"
-    aria-controls="navbarTogglerDemo02"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<!--Navbar-->
+<mdb-navbar SideClass="sticky-top navbar navbar-expand-lg navbar-dark unique-color" [containerInside]="false">
+  <div class="container">
+    <!-- Navbar brand -->
+    <mdb-navbar-brand><a class="navbar-brand text-white" routerLink="">Temáticas</a></mdb-navbar-brand>
 
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="#"
-          >Home <span class="sr-only">(current)</span></a
-        >
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"
-          >Disabled</a
-        >
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" />
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-        Search
-      </button>
-    </form>
+    <!-- Collapsible content -->
+    <links>
+
+      <!-- Links -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a routerLink="/comicyfantasia" class="nav-link waves-light" mdbWavesEffect>Cómic y fantasía<span
+              class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/cocinaygastronomia" class="nav-link waves-light" mdbWavesEffect>Cocina y gastronomía</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/literatura" class="nav-link waves-light" mdbWavesEffect>Literatura</a>
+        </li>
+
+
+      </ul>
+      <!-- Links -->
+
+      <ul class="navbar-nav ml-auto nav-flex-icons">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/Agregarlibros">
+            <i class="fas fa-address-book "> Agregar libros</i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://twitter.com/" target="_blank">
+            <mdb-icon fab icon="twitter"></mdb-icon>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://facebook.com/" target="_blank">
+            <mdb-icon fab icon="facebook"></mdb-icon>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://youtube.com/" target="_blank">
+            <mdb-icon fab icon="youtube"></mdb-icon>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link">
+            <div class="btn-group" mdbDropdown>
+              <mdb-icon fas icon="user" mdbDropdownToggle></mdb-icon>
+              <div class="dropdown-menu dropdown-menu-right dropdown-primary">
+                <a class="dropdown-item" routerLink="/signin">Iiniciar sesion</a>
+                <div class="divider dropdown-divider"></div>
+                <a class="dropdown-item" routerLink="/signup">Registrarse</a>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </links>
+    <!-- Collapsible content -->
   </div>
-</nav>
+</mdb-navbar>
+<!--/.Navbar-->

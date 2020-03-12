@@ -1,16 +1,24 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FooterComponent } from './footer/footer.component';
-import { HeaderComponent } from './header/header.component';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { HeaderComponent } from "./header/header.component";
+import { FooterComponent } from "./footer/footer.component";
+import { AppRoutingModule } from "../app-routing.module";
 
+// MDBBootstra
+import { MDBBootstrapModule } from "angular-bootstrap-md";
+import { Page404Component } from "./page404/page404.component";
+import { CardsComponent } from "./cards/cards.component";
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
-  declarations: [FooterComponent, HeaderComponent],
-  exports: [FooterComponent, HeaderComponent],
-  imports: [
-    CommonModule,
-    MDBBootstrapModule
-  ]
+  declarations: [
+    HeaderComponent,
+    FooterComponent,
+    Page404Component,
+    CardsComponent,
+    AlertComponent
+  ],
+  imports: [CommonModule, MDBBootstrapModule, AppRoutingModule],
+  exports: [FooterComponent, HeaderComponent, Page404Component, CardsComponent, AlertComponent]
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -1,19 +1,18 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { LoginComponent } from './login/login.component';
-import { SignupComponent } from './signup/signup.component';
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
-import { FormsModule } from '@angular/forms';
 
+// COMPONENTES
+import { SigninComponent } from "./signin/signin.component";
+import { SignupComponent } from "./signup/signup.component";
+
+// MDBBootstra
+import { MDBBootstrapModule } from "angular-bootstrap-md";
 
 @NgModule({
-  declarations: [LoginComponent, SignupComponent],
-  exports: [LoginComponent, SignupComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
-    MDBBootstrapModule,
-  ]
+  declarations: [SigninComponent, SignupComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MDBBootstrapModule],
+  exports: [FormsModule, ReactiveFormsModule]
 })
 export class LoginModule { }

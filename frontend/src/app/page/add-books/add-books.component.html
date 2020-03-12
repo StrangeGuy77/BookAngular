@@ -1,0 +1,54 @@
+<div class="contact-form my-5 border border-dark">
+    <div class="contact-image">
+        <img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact" />
+    </div>
+    <form [formGroup]="addForm" novalidate (ngSubmit)="send()"> <!-- (ngSubmit)="send()" -->
+        <h3>Crear libro</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <input type="text" formControlName="author" name="txtName" class="form-control" placeholder="Autor" autocomplete="off"/>
+                </div>
+                <div *ngIf="addForm.controls['author'].invalid && (addForm.controls['author'].dirty || addForm.controls['author'].touched)" class="alert alert-danger zoomIn animated delay-0s">
+                  <div *ngIf="addForm.controls['author'].errors.required">
+                    author is required.
+                  </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" formControlName="title" name="txtEmail" class="form-control" placeholder="Titulo" autocomplete="off"/>
+                </div>
+
+                <div *ngIf="addForm.controls['title'].invalid && (addForm.controls['title'].dirty || addForm.controls['title'].touched)" class="alert alert-danger zoomIn animated delay-0s">
+                  <div *ngIf="addForm.controls['title'].errors.required">
+                    title is required.
+                  </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" formControlName="urlImg" name="txtPhone" class="form-control" placeholder="Url imagen de portada" autocomplete="off"/>
+                </div>
+                <div *ngIf="addForm.controls['urlImg'].invalid && (addForm.controls['urlImg'].dirty || addForm.controls['urlImg'].touched)" class="alert alert-danger zoomIn animated delay-0s">
+                  <div *ngIf="addForm.controls['urlImg'].errors.required">
+                    urlImg is required.
+                  </div>
+                </div>
+                <div class="form-group">
+                    <!-- Regístrate button -->
+                    <button mdbBtn block="true" [disabled]="addForm.pristine || addForm.invalid" class="btn rounded my-4 unique-color text-white" type="submit">Crear</button>
+
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <textarea name="txtMsg" formControlName="description" class="form-control" placeholder="Citar libro" style="width: 100%; height: 150px;" autocomplete="off"></textarea>
+                </div>
+                <div *ngIf="addForm.controls['description'].invalid && (addForm.controls['description'].dirty || addForm.controls['description'].touched)" class="alert alert-danger zoomIn animated delay-0s">
+                  <div *ngIf="addForm.controls['description'].errors.required">
+                    description is required.
+                  </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+

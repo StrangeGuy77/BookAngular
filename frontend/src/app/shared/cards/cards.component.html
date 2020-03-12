@@ -1,0 +1,38 @@
+<div>
+    <!--Card-->
+    <mdb-card cascade="true" narrower="true">
+
+        <!--Card image-->
+        <div class="view view-cascade overlay waves-light" mdbWavesEffect>
+            <mdb-card-img style="height: 20px" class="h-25" src={{UrlImg}}></mdb-card-img>
+            <a>
+                <div class="mask rgba-white-slight"></div>
+            </a>
+        </div>
+        <!--/Card image-->
+
+        <mdb-card-body cascade="true" class="text-center">
+            <!--Card content-->
+            <h5 class="pink-text">
+                <mdb-icon fas icon="user"></mdb-icon> {{author}}
+            </h5>
+            <!--Title-->
+            <hr>
+            <h4 class="card-title">
+                {{title}}
+            </h4>
+            <!--Text-->
+
+            <mdb-card-text>
+                <mdb-icon fas icon="pencil-alt"></mdb-icon>
+                {{CiteBook}}
+            </mdb-card-text>
+
+            <a mdbBtn color="unique" class="waves-light" mdbWavesEffect>Ver mas</a>
+
+        </mdb-card-body>
+        <!--/.Card content-->
+
+    </mdb-card>
+    <!--/.Card-->
+</div>

@@ -1,0 +1,48 @@
+<!-- Default form login -->
+<div class="d-flex justify-content-center mx-5 my-5 py-5">
+
+<form [formGroup]="signin" novalidate (ngSubmit)="send()" class="d-block  col-sm-8 col-md-6 col-lg-6 border border-light p-5">
+
+  <p class="h4 mb-4">Iniciar sesion</p>
+
+  <!-- Email -->
+  <input formControlName="user_email" type="email" class="form-control mb-4" placeholder="Correo electronico" value="germanmejiavieco@gmail.com" required>
+
+  <!-- Password -->
+  <input formControlName="password" type="password" class="form-control mb-4" placeholder="Contraseña" value="German91#" required>
+
+  <div class="d-flex justify-content-around">
+    <!-- <div>
+      <mdb-checkbox formControlName="remenber">Recordar contraseña</mdb-checkbox>
+    </div> -->
+    <div>
+      <!-- Forgot password -->
+      <a href="">Forgot password?</a>
+    </div>
+  </div>
+
+  <!-- Sign in button -->
+  <button mdbBtn block="true" class="my-4 unique-color text-white btn-block btn" type="submit">Iniciar sesion</button>
+
+
+  <div class="text-center">
+    <!-- Social register -->
+    <p>Visitenos en nuestra redes social</p>
+
+    <a type="button" class="light-blue-text mx-2">
+      <mdb-icon fab icon="facebook"></mdb-icon>
+    </a>
+    <a type="button" class="light-blue-text mx-2">
+      <mdb-icon fab icon="twitter"></mdb-icon>
+    </a>
+    <a type="button" class="light-blue-text mx-2">
+      <mdb-icon fab icon="linkedin"></mdb-icon>
+    </a>
+    <a type="button" class="light-blue-text mx-2">
+      <mdb-icon fab icon="github"></mdb-icon>
+    </a>
+  </div>
+
+</form>
+<!-- Default form login -->
+</div>

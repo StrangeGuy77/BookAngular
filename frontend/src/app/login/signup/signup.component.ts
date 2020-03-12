@@ -1,32 +1,54 @@
-import { Component } from '@angular/core';
-import Axios from 'axios';
+import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators  } from "@angular/forms";
+import { UserService } from '../../data/user.service';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  selector: "app-signup",
+  templateUrl: "./signup.component.html",
+  styleUrls: ["./signup.component.css"]
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
 
-  email: string;
-  password: string;
-  regex: RegExp = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+  private notifier: NotifierService;
 
+  signUp = new FormGroup({
+    name: new FormControl('', Validators.required),
+    lastname: new FormControl('', Validators.required),
+    user_email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(8)])
+  });
 
-  async onClick (event: Event): Promise<void> {
-    event.preventDefault();
-    const testEmail: boolean = this.regex.test(this.email);
-    if (testEmail && this.email)
-    {
-      const test = await Axios.post('https://103f126b.ngrok.io/user', {
-        user_email: this.email,
-        password: this.password
-      });
-      console.log(test);
-    } else
-    {
-      console.log('El email ingresado es erróneo');
-    }
+  data: any;
+
+  constructor(private userservice: UserService, notifier: NotifierService ) {
+    this.send();
+    this.notifier = notifier;
   }
 
+  showNotification(type: string, message: string): void {
+    this.notifier.notify(type, message);
+  }
+
+  ngOnInit() {}
+
+  send() {
+    this.data = this.signUp;
+    // console.log(this.data);
+
+    if (this.data.invalid) {
+      return;
+    }
+
+    this.userservice.createUser(this.data.value).subscribe((res: any) => {
+      // console.log(res);
+
+      if (res.userId) {
+        this.showNotification('success', res.message);
+        this.data.reset();
+      } else {
+        this.showNotification('error', res.message);
+      }
+    });
+  }
 }

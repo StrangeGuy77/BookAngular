@@ -1,84 +1,60 @@
-<div class="d-flex justify-content-center p-5">
-  <div class="align-self-center">
-    <!-- Default form register -->
-    <form class="text-center border border-light p-5">
-      <p class="h4 mb-4">Sign up</p>
+<!-- Default form register -->
 
-      <div class="form-row mb-4">
-        <div class="col">
-          <!-- First name -->
-          <input
-            type="text"
-            id="defaultRegisterFormFirstName"
-            class="form-control"
-            placeholder="First name"
-          />
-        </div>
-        <div class="col">
-          <!-- Last name -->
-          <input
-            type="text"
-            id="defaultRegisterFormLastName"
-            class="form-control"
-            placeholder="Last name"
-          />
-        </div>
+<div class="d-flex justify-content-center mx-5 my-5 py-5">
+  <form [formGroup]="signUp" novalidate (ngSubmit)="send()" class="d-block  col-sm-8 col-md-6 col-lg-6 border border-light p-5">
+
+    <p class="h4 mb-4">Regístrate</p>
+
+    <div class="form-row mb-4">
+      <div class="col">
+        <!-- First name -->
+        <input type="text" formControlName="name" class="form-control" placeholder="primer nombre" required>
       </div>
-
-      <!-- E-mail -->
-      <input
-        type="email"
-        id="defaultRegisterFormEmail"
-        class="form-control mb-4"
-        placeholder="E-mail"
-      />
-
-      <!-- Password -->
-      <input
-        type="password"
-        id="defaultRegisterFormPassword"
-        class="form-control"
-        placeholder="Password"
-        aria-describedby="defaultRegisterFormPasswordHelpBlock"
-      />
-      <small
-        id="defaultRegisterFormPasswordHelpBlock"
-        class="form-text text-muted mb-4"
-      >
-        At least 8 characters and 1 digit
-      </small>
-
-      <!-- Phone number -->
-      <input
-        type="text"
-        id="defaultRegisterPhonePassword"
-        class="form-control"
-        placeholder="Phone number"
-        aria-describedby="defaultRegisterFormPhoneHelpBlock"
-      />
-      <small
-        id="defaultRegisterFormPhoneHelpBlock"
-        class="form-text text-muted mb-4"
-      >
-        Optional - for two-step authentication
-      </small>
-
-      <!-- Newsletter -->
-      <div class="row">
-        <div class="col-md-6 mx-auto d-flex justify-content-center">
-          <mdb-checkbox [default]="true"
-            >Subscribe to our newsletter</mdb-checkbox
-          >
-        </div>
+      <div class="col">
+        <!-- Last name -->
+        <input type="text" formControlName="lastname" class="form-control" placeholder="primer apellido" required>
       </div>
+    </div>
+    <div *ngIf="signUp.controls['name'].invalid && (signUp.controls['name'].dirty || signUp.controls['name'].touched)" class="alert alert-danger zoomIn animated delay-0s">
+      <div *ngIf="signUp.controls['name'].errors.required">
+        name is required.
+      </div>
+    </div>
+    <div *ngIf="signUp.controls['lastname'].invalid && (signUp.controls['lastname'].dirty || signUp.controls['lastname'].touched)" class="alert alert-danger zoomIn animated delay-0s">
+      <div *ngIf="signUp.controls['lastname'].errors.required">
+        lastname is required.
+      </div>
+    </div>
 
-      <!-- Sign up button -->
-      <button mdbBtn color="info" block="true" class="my-4" type="submit">
-        Sign in
-      </button>
+    <!-- E-mail -->
+    <input type="email" formControlName="user_email" class="form-control mb-4" placeholder="correo electronico" required [ngClass]="{ 'is-invalid': submitted && user_email.errors }">
+    <div *ngIf="signUp.controls['user_email'].invalid && (signUp.controls['user_email'].dirty || signUp.controls['user_email'].touched)" class="alert alert-danger zoomIn animated delay-0s">
+      <div *ngIf="signUp.controls['user_email'].errors.required">Email is required</div>
+      <div *ngIf="signUp.controls['user_email'].errors.email">Email must be a valid email address</div>
+    </div>
 
+    <!-- Password -->
+    <input type="password" formControlName="password" class="form-control" placeholder="contraseña" required>
+    <small class="form-text text-muted mb-4">
+      Al menos 8 caracteres
+    </small>
+    <div *ngIf="signUp.controls['password'].invalid && (signUp.controls['password'].dirty || signUp.controls['password'].touched)" class="alert alert-danger zoomIn animated delay-0s">
+<!--
+      <div *ngIf="signUp.controls['password'].errors.required">
+        password is required.
+      </div> -->
+
+      <div *ngIf="signUp.controls['password'].errors.required">Contraseña es Requerida</div>
+      <div *ngIf="signUp.controls['password'].errors.minlength">La contraseña debe tener mas de 8 caracteres</div>
+    </div>
+
+    <!-- Regístrate button -->
+    <button mdbBtn block="true" [disabled]="signUp.pristine || signUp.invalid" class="my-4 unique-color text-white" type="submit">Registrarme</button>
+    <hr>
+
+    <div class="text-center">
       <!-- Social register -->
-      <p>or sign up with:</p>
+      <p>Visitenos en nuestra redes social</p>
 
       <a type="button" class="light-blue-text mx-2">
         <mdb-icon fab icon="facebook"></mdb-icon>
@@ -92,15 +68,9 @@
       <a type="button" class="light-blue-text mx-2">
         <mdb-icon fab icon="github"></mdb-icon>
       </a>
+    </div>
 
-      <hr />
 
-      <!-- Terms of service -->
-      <p>
-        By clicking <em>Sign up</em> you agree to our
-        <a href="" target="_blank">terms of service</a>
-      </p>
-    </form>
-    <!-- Default form register -->
-  </div>
+  </form>
+  <!-- Default form register -->
 </div>
