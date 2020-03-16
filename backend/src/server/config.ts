@@ -13,8 +13,8 @@ const startServer = async () => {
   app.use(express.urlencoded({ extended: false }));
 
   routes(app);
-  app.listen(3000);
-  console.log("Listening on port: 3000");
+  app.listen(3001);
+  console.log("Listening on port: 3001");
 };
 
 export default startServer;

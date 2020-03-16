@@ -63,53 +63,65 @@ export const createUser = async (req: Request, res: Response) => {
   {
     res.json({
       message:
-        "Faltan datos. El envío del usuario & contraseña son obligatorios."
+        "Faltan datos. El envío del usuario & contraseña son obligatorios.",
+      validate: false
     });
   } else
   {
-    try
+    const emailRegex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+    if (emailRegex.test(user_email))
     {
-      const searchRepeatedEmail = await User.find({
-        user_email
-      });
+      try
+      {
+        const searchRepeatedEmail = await User.find({
+          user_email
+        });
 
-      if (searchRepeatedEmail.length > 0)
+        if (searchRepeatedEmail.length > 0)
+        {
+          res.json({
+            message: "El usuario que intenta registrar ya está registrado.",
+            validate: false
+          });
+        } else
+        {
+          try
+          {
+            const hashedPassword = await bcrypt.hash(password, 10);
+
+            const newUser = new User({
+              user_email: user_email,
+              password: hashedPassword,
+              confirmed: false,
+              user_role: "unconfirmed_user"
+            });
+
+            await newUser.save();
+
+            res.json({
+              message: "El usuario fue registrado exitosamente",
+              userId: newUser._id,
+              validate: true
+            });
+          } catch (error)
+          {
+            res.json({
+              message: "Hubo un error registrando al usuario.",
+              error
+            });
+          }
+        }
+      } catch (error)
       {
         res.json({
-          message: "El usuario que intenta registrar ya está registrado."
+          message: "Ocurrió un error buscando un email duplicado.",
+          error
         });
-      } else
-      {
-        try
-        {
-          const hashedPassword = await bcrypt.hash(password, 10);
-
-          const newUser = new User({
-            user_email: user_email,
-            password: hashedPassword,
-            confirmed: false,
-            user_role: "unconfirmed_user"
-          });
-
-          await newUser.save();
-
-          res.json({
-            message: "El usuario fue registrado exitosamente",
-            userId: newUser._id
-          });
-        } catch (error)
-        {
-          res.json({
-            message: "Hubo un error registrando al usuario.",
-            error
-          });
-        }
       }
-    } catch (error)
+    } else
     {
       res.json({
-        message: "Ocurrió un error buscando un email duplicado.",
-        error
+        message: "El email contiene una estructura incorrecta. Intente algo con la estructura test@test.com"
       });
     }
   }
