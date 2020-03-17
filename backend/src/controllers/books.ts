@@ -9,8 +9,7 @@ export const getBooks = async (req: Request, res: Response) => {
   if (req.query.categoryname)
   {
     const category = req.query.categoryname;
-    const BooksFound: any = (await Book.find({ categories: { "$in": [`${category}`] } })) as IBook[];
-    console.log(BooksFound);
+    const BooksFound: any = (await Book.find({ categories: { "$in": [`${category}`] } }));
     if (BooksFound)
     {
       if (req.query.only)
@@ -55,7 +54,7 @@ export const getBooks = async (req: Request, res: Response) => {
     }
   }
 
-  if (!(returningBooks.length > 0))
+  if (!(returningBooks.length > 0) && !req.query.only)
   {
     try
     {

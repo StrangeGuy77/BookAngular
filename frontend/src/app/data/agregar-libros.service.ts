@@ -30,7 +30,7 @@ export class AgregarLibrosService {
   uploadBook (book: IAgregarLibro) {
     try
     {
-      const response = this.http.post('https://f224b9b4.ngrok.io/books', book);
+      const response = this.http.post(`${this.SERVER_HOST}/books`, book);
       console.log(response);
       return response;
     } catch (error)

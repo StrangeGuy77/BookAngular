@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from "@angular/core";
 import { BooksService } from '../../data/books.service';
 import { IBook } from '../../interface-data/interface.DataEstrucura';
@@ -14,8 +13,8 @@ export class ComicFantasiaComponent implements OnInit {
 
   constructor(private BooksServic: BooksService) { }
 
-  ngOnInit() {
-    this.BooksServic.getBook().subscribe(res => this.Books = res.Books);
+  ngOnInit () {
+    this.BooksServic.getBooksByCategory("comicsandfantasy").subscribe(res => this.Books = (res as any).BooksFound);
     console.log(this.Books);
   }
 }

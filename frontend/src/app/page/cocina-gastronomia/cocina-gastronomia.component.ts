@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { DataService } from "../../data/data.service";
+import { IBook } from 'src/app/interface-data/interface.DataEstrucura';
+import { BooksService } from 'src/app/data/books.service';
 
 @Component({
   selector: "app-cocina-gastronomia",
@@ -12,9 +14,12 @@ export class CocinaGastronomiaComponent implements OnInit {
   CiteBook: string;
   UrlImg: string;
 
-  constructor(private data: DataService) {}
+  Books: IBook[] | any;
 
-  ngOnInit() {
-    this.data.get().subscribe(result => console.log(result));
+  constructor(private data: BooksService) { }
+
+  ngOnInit () {
+    this.data.getBooksByCategory("cookingandgastronomy").subscribe(res => this.Books = (res as any).BooksFound);
+    console.log(this.Books);
   }
 }

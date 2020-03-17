@@ -1,9 +1,10 @@
 <div class="row">
-
-  <div class="col-4"
-    *ngFor="let item of [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,11,1,1,1,1,1,1,1,1,1,4,4,4,4,4]">
-    <app-cards [author]="author" [title]="title" [CiteBook]="CiteBook" [UrlImg]="UrlImg"></app-cards>
+  <div class="col-4" *ngFor="let item of Books">
+    <app-cards
+      [author]="item.author"
+      [title]="item.title"
+      [CiteBook]="item.description"
+      [UrlImg]="item.urlImg"
+    ></app-cards>
   </div>
-
-
 </div>

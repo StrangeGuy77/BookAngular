@@ -1,26 +1,44 @@
 <!--Navbar-->
-<mdb-navbar SideClass="sticky-top navbar navbar-expand-lg navbar-dark unique-color" [containerInside]="false">
+<mdb-navbar
+  SideClass="sticky-top navbar navbar-expand-lg navbar-dark unique-color"
+  [containerInside]="false"
+>
   <div class="container">
     <!-- Navbar brand -->
-    <mdb-navbar-brand><a class="navbar-brand text-white" routerLink="">Temáticas</a></mdb-navbar-brand>
+    <mdb-navbar-brand
+      ><a class="navbar-brand text-white" routerLink=""
+        >Temáticas</a
+      ></mdb-navbar-brand
+    >
 
     <!-- Collapsible content -->
     <links>
-
       <!-- Links -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a routerLink="/comicyfantasia" class="nav-link waves-light" mdbWavesEffect>Cómic y fantasía<span
-              class="sr-only">(current)</span></a>
+          <a
+            routerLink="/comicyfantasia"
+            class="nav-link waves-light"
+            mdbWavesEffect
+            >Cómic y fantasía<span class="sr-only">(current)</span></a
+          >
         </li>
         <li class="nav-item">
-          <a routerLink="/cocinaygastronomia" class="nav-link waves-light" mdbWavesEffect>Cocina y gastronomía</a>
+          <a
+            routerLink="/cocinaygastronomia"
+            class="nav-link waves-light"
+            mdbWavesEffect
+            >Cocina y gastronomía</a
+          >
         </li>
         <li class="nav-item">
-          <a routerLink="/literatura" class="nav-link waves-light" mdbWavesEffect>Literatura</a>
+          <a
+            routerLink="/literatura"
+            class="nav-link waves-light"
+            mdbWavesEffect
+            >Literatura</a
+          >
         </li>
-
-
       </ul>
       <!-- Links -->
 
@@ -51,7 +69,9 @@
             <div class="btn-group" mdbDropdown>
               <mdb-icon fas icon="user" mdbDropdownToggle></mdb-icon>
               <div class="dropdown-menu dropdown-menu-right dropdown-primary">
-                <a class="dropdown-item" routerLink="/signin">Iiniciar sesion</a>
+                <a class="dropdown-item" routerLink="/signin"
+                  >Iiniciar sesion</a
+                >
                 <div class="divider dropdown-divider"></div>
                 <a class="dropdown-item" routerLink="/signup">Registrarse</a>
               </div>

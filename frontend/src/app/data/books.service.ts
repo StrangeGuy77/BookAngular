@@ -16,22 +16,37 @@ export class BooksService {
 
   books: IBook[] | any;
 
-  getBook(): Observable <any> {
-    try {
+  getBooks (): Observable<any> {
+    try
+    {
       const response: any = this.http.get(`${this.SERVER_HOST}/books`);
       return response;
-    } catch (error) {
+    } catch (error)
+    {
       console.log(error);
     }
   }
 
-   uploadBook(book: IBook) {
-     try {
-       const response = this.http.post(`${this.SERVER_HOST}/books`, book);
-       this.getBook();
-       return response;
-      } catch (error) {
-        console.log(error);
-     }
-   }
+  getBooksByCategory (category: string = "comicsandfantasy") {
+    try
+    {
+      const response = this.http.get(`${this.SERVER_HOST}/books?categoryname=${category}&only=true`);
+      return response;
+    } catch (error)
+    {
+      console.log(error);
+    }
+  }
+
+  uploadBook (book: IBook) {
+    try
+    {
+      const response = this.http.post(`${this.SERVER_HOST}/books`, book);
+      this.getBooks();
+      return response;
+    } catch (error)
+    {
+      console.log(error);
+    }
+  }
 }
