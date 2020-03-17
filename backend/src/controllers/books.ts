@@ -1,22 +1,78 @@
 import { Request, Response } from "express";
 import Book from "../database/models/Books";
 import { IBook } from "../types";
+import User from "../database/models/User";
 
-export const getBooks = async (_: Request, res: Response) => {
-  try
+export const getBooks = async (req: Request, res: Response) => {
+
+  const returningBooks: IBook[] = [];
+  if (req.query.categoryname)
   {
-    const Books = await Book.find();
-    if (Books)
+    const category = req.query.categoryname;
+    const BooksFound: any = (await Book.find({ categories: { "$in": [`${category}`] } })) as IBook[];
+    console.log(BooksFound);
+    if (BooksFound)
+    {
+      if (req.query.only)
+      {
+        res.json({
+          BooksFound
+        });
+      } else
+      {
+        returningBooks.push(BooksFound);
+      }
+    } else
     {
       res.json({
-        Books
+        message: `There are no books with ${category} category within database.`
       });
     }
-  } catch (error)
+  }
+  if (req.query.userId)
   {
-    res.json({
-      message: "Ocurrió un error en la petición."
-    });
+    try
+    {
+      const { userId } = req.query;
+      const bookCollection = await User.findById(userId, 'book_collection');
+      if (bookCollection)
+      {
+        res.json({
+          bookCollection
+        });
+      } else
+      {
+        res.json({
+          message: "The user you're looking for doesnt exist or doesnt have any book within his collection."
+        });
+      }
+    } catch (error)
+    {
+      res.json({
+        message: "There was an error while searching for books within user collection.",
+        error
+      });
+    }
+  }
+
+  if (!(returningBooks.length > 0))
+  {
+    try
+    {
+      const Books: any = await Book.find();
+      if (Books)
+      {
+        returningBooks.push(Books);
+        res.json({
+          returningBooks
+        });
+      }
+    } catch (error)
+    {
+      res.json({
+        message: "Ocurrió un error en la petición."
+      });
+    }
   }
 };
 
@@ -75,8 +131,10 @@ export const createBook = async (req: Request, res: Response) => {
       {
         try
         {
-          const newBook = new Book(body);
-
+          const newBook = new Book({
+            ...body,
+            categories: (body as any).categories.split(',')
+          });
           await newBook.save();
 
           res.json({

@@ -295,7 +295,7 @@ export const saveABookIntoUser = async (req: Request, res: Response) => {
     {
       res.json({
         message:
-          "La id del usuario no pueden estar vacíos. Los campos obligatorios del libro son: author, description, title"
+          "La id del usuario no puede estar vacía. Los campos obligatorios del libro son: author, description, title"
       });
     } else
     {
@@ -334,3 +334,5 @@ export const saveABookIntoUser = async (req: Request, res: Response) => {
     }
   }
 };
+
+

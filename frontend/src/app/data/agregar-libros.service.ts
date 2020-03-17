@@ -14,24 +14,28 @@ export class AgregarLibrosService {
 
   books: IAgregarLibro[] | any;
 
-  post(book : IAgregarLibro) {
-    try {
+  post (book: IAgregarLibro) {
+    try
+    {
       // console.log('entro service');
       const response = this.http.post(`${this.SERVER_HOST}/books`, book);
       console.log(response);
       return response;
-    } catch(error){
+    } catch (error)
+    {
       console.log(error);
     }
   }
 
-  // uploadBook(book : IAgregarLibro) {
-  //   try {
-  //     const response = this.http.post('https://f224b9b4.ngrok.io/books',book);
-  //     console.log(response);
-  //     return response;
-  //    } catch(error){
-  //      console.log(error);
-  //   }
-  // }
+  uploadBook (book: IAgregarLibro) {
+    try
+    {
+      const response = this.http.post('https://f224b9b4.ngrok.io/books', book);
+      console.log(response);
+      return response;
+    } catch (error)
+    {
+      console.log(error);
+    }
+  }
 }

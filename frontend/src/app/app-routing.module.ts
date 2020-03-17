@@ -10,16 +10,8 @@ import { AddBooksComponent } from "./page/add-books/add-books.component";
 import { ComicFantasiaComponent } from "./page/comic-fantasia/comic-fantasia.component";
 import { CocinaGastronomiaComponent } from "./page/cocina-gastronomia/cocina-gastronomia.component";
 
-import { CardsComponent } from "./shared/cards/cards.component";
-import { AlertComponent } from './shared/alert/alert.component';
-
 const routes: Routes = [
   {
-    path: "hola",
-    component: AlertComponent,
-    data: { title: "Iniciar sesion" }
-  },
-   {
     path: "signin",
     component: SigninComponent,
     data: { title: "Iniciar sesion" }
@@ -58,4 +50,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
